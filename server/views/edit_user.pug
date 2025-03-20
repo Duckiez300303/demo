@@ -1,0 +1,25 @@
+doctype html
+html
+  head
+    title Edit User
+  body
+    h1 Edit User
+    form(action=`/server/users/${user.id}?_method=put`, method="post")
+      div
+        label(for="name") Name:
+        input(type="text", name="name", value=user.name, required)
+      div
+        label(for="email") Email:
+        input(type="email", name="email", value=user.email, required)
+      div
+        label(for="password") Password:
+        input(type="password", name="password", value=user.password, required)
+      div
+        label(for="role") Role:
+        select(name="role", required)
+          option(value="staff" selected=user.role=="staff") Staff
+          option(value="admin" selected=user.role=="admin") Admin
+          option(value="customer" selected=user.role=="customer") Customer
+      div
+        input(type="hidden", name="_method", value="put")
+        button(type="submit") Update User

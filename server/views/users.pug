@@ -1,0 +1,70 @@
+doctype html
+html
+  head
+    title Users List
+    style.
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+      }
+      th {
+        background-color: #f2f2f2;
+        text-align: left;
+      }
+    script.
+      function confirmDelete(event) {
+        if (!confirm("Are you sure you want to delete this user?")) {
+          event.preventDefault();
+        }
+      }
+  body
+    if message
+      div(style="color: red;")= message
+    h1 Add New User
+    form(action="/server/users", method="post")
+      div
+        label(for="name") Name:
+        input(type="text", name="name", required)
+      div
+        label(for="email") Email:
+        input(type="email", name="email", required)
+      div
+        label(for="password") Password:
+        input(type="password", name="password", required)
+      div
+        label(for="role") Role:
+        select(name="role", required)
+          option(value="staff") Staff
+          option(value="admin") Admin
+          option(value="customer") Customer
+      div
+        button(type="submit") Add User
+    h1 Users List
+    form(action="/server/users", method="get")
+      input(type="text", name="search", placeholder="Search by name", value=search)
+      button(type="submit") Search
+    table
+      thead
+        tr
+          th Name
+          th Email
+          th Password
+          th Role
+          th Actions
+      tbody
+        each user in users
+          tr
+            td= user.name
+            td= user.email
+            td= user.password
+            td= user.role
+            td
+              form(action=`/server/users/${user.id}/edit`, method="get")
+                button(type="submit") Edit
+              form(action=`/server/users/${user.id}?_method=DELETE`, method="post" onsubmit="confirmDelete(event)")
+                input(type="hidden", name="_method", value="delete")
+                button(type="submit") Delete
