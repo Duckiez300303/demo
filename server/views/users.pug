@@ -63,7 +63,7 @@ html
             td= user.password
             td= user.role
             td
-              form(action=`/server/users/${user.id}/edit`, method="get")
+              form(action=`/server/users/${user.id}`, method="get")
                 button(type="submit") Edit
               form(action=`/server/users/${user.id}?_method=DELETE`, method="post" onsubmit="confirmDelete(event)")
                 input(type="hidden", name="_method", value="delete")
